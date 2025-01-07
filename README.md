@@ -28,4 +28,6 @@ Oracle VirtualBox is a free, open-source virtualization software that allows use
 - **Visual studio C++ Redistributable**
 
 The Visual Studio C++ Redistributable is a set of runtime libraries required to run applications developed with Microsoft Visual C++. It provides components like the C Runtime (CRT) and Standard C++ Library, ensuring compatibility and proper execution of C++ programs on Windows, even without Visual Studio installed.
+![Screenshot 2025-01-07 002913](https://github.com/user-attachments/assets/1264bcac-0e1f-4d60-94bd-b562232018e3)
+
 </details>
