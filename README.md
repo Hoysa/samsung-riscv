@@ -23,7 +23,8 @@ The task is to set up the essential tools for the RISC-V Talent Development Prog
 
 Oracle VirtualBox is a free, open-source virtualization software that allows users to run multiple operating systems on a single machine. It supports Windows, Linux, macOS, and other platforms, enabling the creation of virtual machines (VMs) for testing, development, or learning purposes.
 
-![image 1.1](https://github.com/Hoysa/samsung-riscv/edit/main/Task1/Screenshot%202025-01-07%20002808.png)
+![Screenshot 2025-01-07 002808](https://github.com/user-attachments/assets/97b2fb22-db4d-44e1-8541-65dd34863e26)
+
 - **Visual studio C++ Redistributable**
 
 The Visual Studio C++ Redistributable is a set of runtime libraries required to run applications developed with Microsoft Visual C++. It provides components like the C Runtime (CRT) and Standard C++ Library, ensuring compatibility and proper execution of C++ programs on Windows, even without Visual Studio installed.
