@@ -10,7 +10,7 @@
 - github profile: https://github.com/Hoysa
 
 <details>
-  <summary>Task1</summary>
+  <summary>Task1 : Introduction to RISC-V Architecture and Compilation Workflow</summary>
   <br>
   
 **Setting Up the RISC-V Toolchain.**
@@ -109,7 +109,7 @@ and then caluculate the no. of instruction.
 
 
 <details>
-  <summary>Task2</summary>
+  <summary>Task2 : Exploring RISC-V Through Program Debugging</summary>
 
 ## **Objective**
 Focused on exploring the RISC-V architecture by writing, compiling, executing, and debugging programs. The goal was to analyze program behavior at the instruction level and gain practical experience with RISC-V tools and debugging workflows.
@@ -187,3 +187,206 @@ Focused on exploring the RISC-V architecture by writing, compiling, executing, a
 - Familiarity with key RISC-V tools like the Spike simulator and GCC compiler.
 
 </details>
+
+
+<details>
+  <summary>Task3 : RISC-V Instruction Set Breakown</summary>
+
+---
+
+## **1. Overview of RISC-V Instructions**
+RISC-V is a simple and modular instruction set architecture (ISA). Instructions in RISC-V are 32 bits long (fixed width) and organized into six standard formats: **R-Type**, **I-Type**, **S-Type**, **B-Type**, **U-Type**, and **J-Type**. These formats define the fields in an instruction.
+
+Each instruction contains the following **fields**:
+1. **Opcode**: Specifies the type of instruction (e.g., load, store, arithmetic).
+2. **rd**: Destination register (where the result is stored).
+3. **rs1, rs2**: Source registers (used in operations or memory access).
+4. **funct3, funct7**: Specify the exact operation for certain opcodes.
+5. **Immediate (imm)**: A constant value embedded in the instruction.
+6. **Offset/Address**: Used in memory or control transfer instructions.
+
+---
+
+## **2. Detailed Breakdown of Instruction Formats**
+
+### **R-Type (Register-Register Instructions)**
+- Used for operations between registers (e.g., addition, subtraction).
+- **Fields**:  
+  - **opcode** (7 bits): Identifies the type of instruction.  
+  - **rd** (5 bits): Destination register.  
+  - **funct3** (3 bits): Subclassifies the operation (e.g., add vs. subtract).  
+  - **rs1** (5 bits): First source register.  
+  - **rs2** (5 bits): Second source register.  
+  - **funct7** (7 bits): Further subclassifies the operation.  
+
+#### Example: `add a0, a1, a2`  
+- Add contents of `a1` and `a2`, store the result in `a0`.  
+- **Encoding**:  
+  - `opcode`: `0110011` (arithmetic operation).  
+  - `rd`: `a0` (x10 = 01010).  
+  - `funct3`: `000` (add operation).  
+  - `rs1`: `a1` (x11 = 01011).  
+  - `rs2`: `a2` (x12 = 01100).  
+  - `funct7`: `0000000` (add-specific).  
+- **Final Encoding**: `0x00c50533`
+
+---
+
+### **I-Type (Immediate Instructions)**
+- Used for operations with immediate values and memory loads.
+- **Fields**:  
+  - **opcode** (7 bits): Instruction type (e.g., load or arithmetic).  
+  - **rd** (5 bits): Destination register.  
+  - **funct3** (3 bits): Subclassifies the operation.  
+  - **rs1** (5 bits): Source register.  
+  - **imm[11:0]** (12 bits): Immediate value (signed).  
+
+#### Example: `addi sp, sp, -16`  
+- Add immediate value `-16` to `sp`.  
+- **Encoding**:  
+  - `opcode`: `0010011` (immediate arithmetic).  
+  - `rd`: `sp` (x2 = 00010).  
+  - `funct3`: `000` (add immediate).  
+  - `rs1`: `sp` (x2 = 00010).  
+  - `imm`: `-16` (12-bit signed = `111111111000`).  
+- **Final Encoding**: `0xfff10113`
+
+---
+
+### **S-Type (Store Instructions)**
+- Used to store a register value into memory.
+- **Fields**:  
+  - **opcode** (7 bits): Instruction type (store).  
+  - **imm[11:5]** (7 bits): Upper 7 bits of the immediate value.  
+  - **rs2** (5 bits): Source register to be stored.  
+  - **rs1** (5 bits): Base address register.  
+  - **funct3** (3 bits): Operation subclass.  
+  - **imm[4:0]** (5 bits): Lower 5 bits of the immediate value.  
+
+#### Example: `sd ra, 8(sp)`  
+- Store the value of `ra` at the memory address `sp + 8`.  
+- **Encoding**:  
+  - `opcode`: `0100011` (store operation).  
+  - `imm[11:5]`: `0000000` (from `8`, split upper bits).  
+  - `rs2`: `ra` (x1 = 00001).  
+  - `rs1`: `sp` (x2 = 00010).  
+  - `funct3`: `011` (store doubleword).  
+  - `imm[4:0]`: `01000` (from `8`, split lower bits).  
+- **Final Encoding**: `0x00813023`
+
+---
+
+### **B-Type (Branch Instructions)**
+- Used for conditional branching.
+- **Fields**:  
+  - **opcode** (7 bits): Instruction type (branch).  
+  - **imm[12]** (1 bit): Immediate value MSB.  
+  - **imm[10:5]** (6 bits): Middle bits of immediate value.  
+  - **rs1** (5 bits): First source register.  
+  - **rs2** (5 bits): Second source register.  
+  - **funct3** (3 bits): Branch condition.  
+  - **imm[4:1]** (4 bits): Lower bits of immediate value.  
+  - **imm[11]** (1 bit): Immediate value LSB.  
+
+#### Example: `beq a0, a1, 16`  
+- Branch to `PC + 16` if `a0 == a1`.  
+- **Encoding**:  
+  - `opcode`: `1100011` (branch).  
+  - `imm[12]`: `0`.  
+  - `imm[10:5]`: `000001`.  
+  - `rs1`: `a0` (x10 = 01010).  
+  - `rs2`: `a1` (x11 = 01011).  
+  - `funct3`: `000` (branch if equal).  
+  - `imm[4:1]`: `0001`.  
+  - `imm[11]`: `0`.  
+- **Final Encoding**: `0x01050863`
+
+---
+
+### **U-Type (Upper Immediate Instructions)**
+- Used to load a 20-bit immediate into the upper 20 bits of a register.
+- **Fields**:  
+  - **opcode** (7 bits): Instruction type.  
+  - **rd** (5 bits): Destination register.  
+  - **imm[31:12]** (20 bits): Immediate value.  
+
+#### Example: `lui a0, 0x21`  
+- Load `0x21` into the upper 20 bits of `a0`.  
+- **Encoding**:  
+  - `opcode`: `0110111` (load upper immediate).  
+  - `rd`: `a0` (x10 = 01010).  
+  - `imm[31:12]`: `0x21`.  
+- **Final Encoding**: `0x00210537`
+
+---
+
+### **J-Type (Jump Instructions)**
+- Used for unconditional jumps and storing return addresses.
+- **Fields**:  
+  - **opcode** (7 bits): Instruction type (jump).  
+  - **rd** (5 bits): Destination register.  
+  - **imm[20]** (1 bit): Immediate MSB.  
+  - **imm[10:1]** (10 bits): Middle bits of the immediate.  
+  - **imm[11]** (1 bit): Immediate bit 11.  
+  - **imm[19:12]** (8 bits): Remaining bits of the immediate.  
+
+#### Example: `jal ra, 10484`  
+- Jump to `PC + 10484` and save return address in `ra`.  
+- **Encoding**:  
+  - `opcode`: `1101111` (jump and link).  
+  - `rd`: `ra` (x1 = 00001).  
+  - Immediate: Split `10484` into the fields:  
+    - `imm[20]`: `0`, `imm[10:1]`: `0100011101`, `imm[11]`: `0`, `imm[19:12]`: `00101000`.  
+- **Final Encoding**: `0x28c000ef`
+
+---
+
+ 
+
+---
+
+## **RISC-V Instruction Formats**
+RISC-V instructions are 32 bits wide and use several standard formats. These formats define how the binary instruction is divided into fields for operation codes (opcodes), registers, immediate values, and function identifiers.  
+
+### **Key Instruction Formats**
+| **Format** | **Description**                                           | **Fields**                                               |
+|------------|-----------------------------------------------------------|----------------------------------------------------------|
+| **R-Type** | Register-register operations                              | opcode, rd, funct3, rs1, rs2, funct7                     |
+| **I-Type** | Immediate value operations and loads                      | opcode, rd, funct3, rs1, imm[11:0]                       |
+| **S-Type** | Store instructions                                        | opcode, imm[11:5], rs2, rs1, funct3, imm[4:0]            |
+| **B-Type** | Conditional branches                                      | opcode, imm[12], imm[10:5], rs1, rs2, funct3, imm[4:1]   |
+| **U-Type** | Upper immediate (load a 20-bit immediate)                 | opcode, rd, imm[31:12]                                   |
+| **J-Type** | Unconditional jumps                                       | opcode, rd, imm[20], imm[10:1], imm[11], imm[19:12]      |
+
+---
+
+## **Instruction Breakdown and Examples**
+Here are 15 unique RISC-V instructions, including their type, explanation, components, and final encoding.
+
+| **#** | **Instruction**         | **Type** | **Explanation**                                                                                       | **Fields**                                                                                                                                               | **Encoding (Hex)** |
+|-------|--------------------------|----------|-------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------|
+| 1     | `lui a0, 0x21`           | U-Type   | Load 20-bit immediate value (shifted left by 12) into upper 20 bits of `a0`.                          | **opcode**: `0110111`, **rd**: `a0` (x10), **imm[31:12]**: `0x21`.                                                                                       | `0x00210537`       |
+| 2     | `addi sp, sp, -16`       | I-Type   | Add immediate value (-16) to `sp`.                                                                   | **opcode**: `0010011`, **rd**: `sp` (x2), **rs1**: `sp` (x2), **imm[11:0]**: `-16`.                                                                      | `0xfff10113`       |
+| 3     | `add a0, a0, a1`         | R-Type   | Add contents of `a0` and `a1`, store result in `a0`.                                                 | **opcode**: `0110011`, **rd**: `a0` (x10), **rs1**: `a0` (x10), **rs2**: `a1` (x11), **funct3**: `000`, **funct7**: `0000000`.                             | `0x00b50533`       |
+| 4     | `sd ra, 8(sp)`           | S-Type   | Store the value in `ra` to memory at `sp + 8`.                                                       | **opcode**: `0100011`, **rs1**: `sp` (x2), **rs2**: `ra` (x1), **imm[11:0]**: `8` (split into `imm[11:5]` and `imm[4:0]`).                                | `0x00813023`       |
+| 5     | `jal ra, 10484`          | J-Type   | Jump to address (PC + 10484) and save return address in `ra`.                                        | **opcode**: `1101111`, **rd**: `ra` (x1), **imm[20:0]**: `10484` (split into `imm[20]`, `imm[10:1]`, `imm[11]`, and `imm[19:12]`).                        | `0x28c000ef`       |
+| 6     | `li a1, 5`               | I-Type   | Load immediate value 5 into `a1`.                                                                    | **opcode**: `0010011`, **rd**: `a1` (x11), **rs1**: `x0` (hardwired to 0), **imm[11:0]**: `5`.                                                           | `0x00500893`       |
+| 7     | `mv a0, a2`              | I-Type   | Move contents of `a2` to `a0` (pseudoinstruction for `addi a0, a2, 0`).                              | **opcode**: `0010011`, **rd**: `a0` (x10), **rs1**: `a2` (x12), **imm[11:0]**: `0`.                                                                      | `0x00060513`       |
+| 8     | `ecall`                  | I-Type   | Perform a system call.                                                                                | **opcode**: `1110011`, **funct3**: `000`, **rd**, **rs1**, and **imm[11:0]**: All zeros.                                                                 | `0x00000073`       |
+| 9     | `ld ra, 8(sp)`           | I-Type   | Load value from memory at `sp + 8` into `ra`.                                                        | **opcode**: `0000011`, **rd**: `ra` (x1), **rs1**: `sp` (x2), **imm[11:0]**: `8`.                                                                        | `0x00813003`       |
+| 10    | `add sp, sp, 16`         | I-Type   | Add immediate value 16 to `sp`.                                                                      | **opcode**: `0010011`, **rd**: `sp` (x2), **rs1**: `sp` (x2), **imm[11:0]**: `16`.                                                                       | `0x01010113`       |
+| 11    | `ret`                    | I-Type   | Return from a function (pseudoinstruction for `jalr x0, 0(ra)`).                                      | **opcode**: `1100111`, **rd**: `x0`, **rs1**: `ra` (x1), **imm[11:0]**: `0`.                                                                             | `0x00008067`       |
+| 12    | `auipc a5, 0xFFFF0`      | U-Type   | Load PC-relative 20-bit immediate value into `a5`.                                                   | **opcode**: `0010111`, **rd**: `a5` (x15), **imm[31:12]**: `0xFFFF0`.                                                                                    | `0xFFFFF797`       |
+| 13    | `addi a5, a5, -220`      | I-Type   | Add immediate value (-220) to `a5`.                                                                  | **opcode**: `0010011`, **rd**: `a5` (x15), **rs1**: `a5` (x15), **imm[11:0]**: `-220` (12-bit signed value).                                             | `0xFCF78313`       |
+| 14    | `beq a0, a1, 16`         | B-Type   | Branch to PC + 16 if `a0` equals `a1`.                                                               | **opcode**: `1100011`, **rs1**: `a0` (x10), **rs2**: `a1` (x11), **imm[12:1]**: `16` (split into `imm[12]`, `imm[10:5]`, `imm[4:1]`).                     | `0x01050863`       |
+| 15    | `jalr ra, 0(sp)`         | I-Type   | Jump to address in `sp` and save return address in `ra`.                                             | **opcode**: `1100111`, **rd**: `ra` (x1), **rs1**: `sp` (x2), **imm[11:0]**: `0`.                                                                        | `0x00013067`       |
+
+---
+
+### **Detailed Explanation of Encoding Steps**
+- **Immediate Values**: Handled differently depending on the instruction type (e.g., split into multiple fields in S-Type, B-Type, and J-Type).  
+- **Registers**: Mapped to their binary equivalents (e.g., `a0 = x10 = 01010`).  
+- **Opcodes and funct3/funct7**: Unique for each instruction and operation.  
+
+
+ </details> 
