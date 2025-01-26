@@ -406,7 +406,6 @@ The objective of this task is to perform the simulation of the RISC-V core using
 Hoysaleshwari/
 |-- hoysala_rv64i.v            # Verilog netlist for the RISC-V Core
 |-- hoysala_rv64i_tb.v         # Testbench for the RISC-V Core
-|-- README.md                  # Project documentation
 |-- Makefile                   # Makefile for compilation and simulation
 |-- waveforms/                 # Directory for waveform snapshots
     |-- *.png                  # Waveform images
@@ -562,15 +561,4 @@ The waveforms were analyzed for the following instructions:
 
 ---
 
-## Directory Breakdown
-- `hoysala_rv64i.v`: Verilog netlist.
-- `hoysala_rv64i_tb.v`: Testbench.
-- `Makefile`: Automates compilation and simulation.
-- `waveforms/`: Stores waveform snapshots.
-
----
-
-
-
-  
 </details>
