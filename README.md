@@ -390,3 +390,187 @@ Here are 15 unique RISC-V instructions, including their type, explanation, compo
 
 
  </details> 
+<details>  <summary>Task4 : Functional Simulation of RISC-V Core </summary>
+
+  # RISC-V Core Functional Simulation
+
+"**Note**: Designing the RISC-V architecture and writing its testbench are not part of this skill development programme. Therefore, we will use the pre-designed Verilog code and testbench from the reference GitHub repository: iiitb_rv32i."
+
+## Objective
+The objective of this task is to perform the simulation of the RISC-V core using `hoysala_rv64i.v` (LogNetList) and `hoysala_rv64i_tb.v` (TestBench). The simulation involves compiling the Verilog files, generating a `.vcd` file, and observing the waveform in GTKWave.
+
+---
+
+## Project Structure
+```
+Hoysaleshwari/
+|-- hoysala_rv64i.v            # Verilog netlist for the RISC-V Core
+|-- hoysala_rv64i_tb.v         # Testbench for the RISC-V Core
+|-- README.md                  # Project documentation
+|-- Makefile                   # Makefile for compilation and simulation
+|-- waveforms/                 # Directory for waveform snapshots
+    |-- *.png                  # Waveform images
+```
+
+---
+
+## Tools Used
+- **Icarus Verilog (iverilog):** Used for compiling and simulating Verilog design files.
+- **GTKWave:** Used for viewing and analyzing waveform outputs.
+
+---
+
+## Steps to Perform Simulation
+
+### 1. Setting up the Environment
+Ensure you have the following installed:
+- **Icarus Verilog:** For compiling and simulating Verilog files.
+- **GTKWave:** For waveform analysis.
+
+Install on Ubuntu:
+```bash
+sudo apt update
+sudo apt install iverilog gtkwave
+```
+
+For Windows/MacOS, download and install [Icarus Verilog](https://github.com/steveicarus/iverilog) and [GTKWave](http://gtkwave.sourceforge.net/).
+
+---
+
+### 2. Compile and Simulate
+
+- Compile `hoysala_rv64i.v` and `hoysala_rv64i_tb.v`.
+- Generate the `hoysala_rv64i.vcd` waveform file.
+- ![Screenshot 2025-01-26 101246](https://github.com/user-attachments/assets/beffc710-6a73-48d2-b81a-50e7bc045cb0)
+
+
+---
+
+### 3. View Waveforms
+To open the waveform file, use GTKWave:
+```bash
+gtkwave hoysala_rv64i.vcd
+```
+
+---
+
+## Results and Analysis
+
+### Instructions Simulated
+The waveforms were analyzed for the following instructions:
+
+#### 1. ADD R6, R2, R1
+- **Standard RISC-V ISA:** `32'h00110333`
+- **Hardcoded ISA:** `32'h02208300`
+- **Input Values:** R2 = 2, R1 = 1
+- **Output Value:** R6 = 3
+- **Analysis:** This instruction adds the values in registers R2 and R1, storing the result in R6.
+- ![Screenshot 2025-01-25 223923](https://github.com/user-attachments/assets/7a15ab77-f07c-4164-87bf-eb49903f77ac)
+
+
+#### 2. SUB R7, R1, R2
+- **Standard RISC-V ISA:** `32'h402083b3`
+- **Hardcoded ISA:** `32'h02209380`
+- **Input Values:** R1 = 2, R2 = 3
+- **Output Value:** R7 = FFFFFFFF (32-bit representation of -1)
+- **Analysis:** This instruction subtracts the value in R2 from R1, resulting in a negative value represented in two's complement.
+- ![Screenshot 2025-01-25 224003](https://github.com/user-attachments/assets/2b859212-c16a-4d90-8d76-c4c31da47dbf)
+
+
+#### 3. AND R8, R1, R3
+- **Standard RISC-V ISA:** `32'h0030f433`
+- **Hardcoded ISA:** `32'h0230a400`
+- **Input Values:** R1 = 2, R3 = 5
+- **Output Value:** R8 = 1
+- **Analysis:** Performs a bitwise AND operation between R1 and R3, storing the result in R8.
+- ![Screenshot 2025-01-25 224042](https://github.com/user-attachments/assets/aac823d3-6f22-4781-9d5d-083d16e8d18a)
+
+
+#### 4. OR R9, R2, R5
+- **Standard RISC-V ISA:** `32'h005164b3`
+- **Hardcoded ISA:** `32'h02513480`
+- **Input Values:** R2 = 1, R5 = 4
+- **Output Value:** R9 = 7
+- **Analysis:** Performs a bitwise OR operation between R2 and R5, storing the result in R9.
+- ![Screenshot 2025-01-25 224248](https://github.com/user-attachments/assets/3bd6e924-27e0-4c67-ad2d-cbb1c3a03f44)
+
+
+#### 5. XOR R10, R1, R4
+- **Standard RISC-V ISA:** `32'h0040c533`
+- **Hardcoded ISA:** `32'h0240c500`
+- **Input Values:** R1 = 2, R4 = 4
+- **Output Value:** R10 = 5
+- **Analysis:** Performs a bitwise XOR operation between R1 and R4, storing the result in R10.
+- ![Screenshot 2025-01-25 224351](https://github.com/user-attachments/assets/b2be1d8c-feac-458e-bc67-8e1b1cd67409)
+
+
+#### 6. SLT R1, R2, R4
+- **Standard RISC-V ISA:** `32'h0045a0b3`
+- **Hardcoded ISA:** `32'h02415580`
+- **Input Values:** R2 = 4, R4 = 5
+- **Output Value:** R1 = 1
+- **Analysis:** Compares R2 and R4, setting R1 to 1 if R2 is less than R4.
+- ![Screenshot 2025-01-25 224436](https://github.com/user-attachments/assets/443b4c44-baea-4b7f-8578-c71a9523c0ec)
+
+
+#### 7. ADDI R12, R4, 5
+- **Standard RISC-V ISA:** `32'h004120b3`
+- **Hardcoded ISA:** `32'h00520600`
+- **Input Values:** R4 = 1, Immediate = 2
+- **Output Value:** R12 = 9
+- **Analysis:** Adds the immediate value 5 to the contents of R4, storing the result in R12.
+- ![Screenshot 2025-01-25 224526](https://github.com/user-attachments/assets/e3c32fc1-7ff9-48c5-9cb6-97cdde44f0aa)
+
+
+#### 8. BEQ R0, R0, 15
+- **Standard RISC-V ISA:** `32'h00000f63`
+- **Hardcoded ISA:** `32'h00f00002`
+- **Input Values:** R0 = 0, R0 = 0
+- **Output Value:** Branch taken to offset 15
+- **Analysis:** Compares R0 and R0. Since they are equal, a branch to the specified offset is executed.
+
+
+#### 9. SW R3, R1, 2
+- **Standard RISC-V ISA:** `32'h0030a123`
+- **Hardcoded ISA:** `32'h00209181`
+- **Input Values:** R3 = 6, R1 = Base Address, Offset = 2
+- **Output Value:** Memory[Base Address + 2] = 6
+- **Analysis:** Stores the value in R3 to the memory address calculated by adding the offset to R1.
+- ![Screenshot 2025-01-25 224630](https://github.com/user-attachments/assets/ea609cd0-920d-422f-b0d5-24bd4b855c7f)
+
+
+#### 10. LW R13, R1, 2
+- **Standard RISC-V ISA:** `32'h0020a683`
+- **Hardcoded ISA:** `32'h00208681`
+- **Input Values:** R1 = Base Address, Offset = 2
+- **Output Value:** R13 = Memory[Base Address + 2]
+- **Analysis:** Loads the value from memory at the specified address into R13.
+
+#### 11. SRL R16, R14, R2
+- **Standard RISC-V ISA:** `32'h0030a123`
+- **Hardcoded ISA:** `32'h00271803`
+- **Input Values:** R14 = 16, R2 = 2
+- **Output Value:** R16 = 4
+- **Analysis:** Performs a logical right shift on the value in R14 by the amount specified in R2, storing the result in R16.
+
+#### 12. SLL R15, R1, R2
+- **Standard RISC-V ISA:** `32'h002097b3`
+- **Hardcoded ISA:** `32'h00208783`
+- **Input Values:** R1 = 1, R2 = 3
+- **Output Value:** R15 = 8
+- **Analysis:** Performs a logical left shift on the value in R1 by the amount specified in R2, storing the result in R15.
+
+---
+
+## Directory Breakdown
+- `hoysala_rv64i.v`: Verilog netlist.
+- `hoysala_rv64i_tb.v`: Testbench.
+- `Makefile`: Automates compilation and simulation.
+- `waveforms/`: Stores waveform snapshots.
+
+---
+
+
+
+  
+</details>
