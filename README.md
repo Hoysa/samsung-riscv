@@ -606,14 +606,60 @@ This project uses a **RISC-V VSDSquadron Mini** board to translate **Morse code*
 
 ## Block Diagram
 
-![Screenshot 2025-02-13 113414](https://github.com/user-attachments/assets/0b4ec213-d708-41b0-8ba1-1a2705c5805e)
 
+![Screenshot 2025-02-13 181820](https://github.com/user-attachments/assets/18de9e69-c2b9-4093-99c8-398af4b33f5b)
 
+The block diagram illustrates the working process of the Morse Code to Text Converter using a **VSDSquadron Mini (RISC-V) board**, **Push Button**, and **I2C LCD Display**:
+
+### 1. **Push Button Input:**  
+- The push button is used to enter Morse code.  
+  - A **short press** registers a **dot (·)**.  
+  - A **long press** registers a **dash (–)**.  
+
+### 2. **RISC-V Microcontroller Processing:**  
+- The RISC-V board reads button presses and decodes the Morse code using programmed logic.  
+- It converts the Morse input into **English text**.  
+
+### 3. **I2C LCD Display Output:**  
+- The decoded text is displayed on the **I2C LCD screen**, connected to the microcontroller via:  
+  - **SCL (Clock)** line  
+  - **SDA (Data)** line  
+
+### 4. **Signal Flow:**  
+- **Input:** Push button sends Morse signals to the RISC-V.  
+- **Processing:** RISC-V processes the signals and converts them to text.  
+- **Output:** The I2C LCD displays real-time text output.  
+
+This system enables users unfamiliar with Morse code to easily read the translated text.
 
 
 ## circuit diagram
+![Screenshot 2025-02-13 181707](https://github.com/user-attachments/assets/8faa7273-8e74-4f64-84b0-e3fb9d3f6396)
 
 
-![Screenshot 2025-02-13 150529](https://github.com/user-attachments/assets/78c1a28c-e4f7-4fb6-a956-5d285d243f41)
+The circuit diagram shows the connections between the **RISC-V Squadron Mini**, **I2C LCD Display**, **Push Button**, and **5V Battery** for the Morse Code to Text Converter project.
+
+###  **1. Power Supply:**  
+- The circuit is powered using a **5V Battery**.  
+  - **Red Wire:** Connects the battery’s positive terminal to the **VCC** pin of the I2C LCD and **5V pin** of the RISC-V board.  
+  - **Black Wire:** Connects the battery’s negative terminal to the **GND** pins of the RISC-V and I2C LCD.  
+
+###  **2. Push Button with Pull-Down Resistor:**  
+- The **Push Button** is connected to the RISC-V microcontroller for Morse code input.  
+  - One terminal of the button is connected to **GPIO PD3** on the RISC-V.  
+  - The other terminal is connected to the ground through a **10kΩ pull-down resistor**.  
+  - The resistor ensures that the input remains **LOW** when the button is not pressed.  
+
+### **3. I2C LCD Display:**  
+- The I2C LCD is used to display the translated Morse code as text. It is connected to the RISC-V using:  
+  - **SCL (Green Wire):** Connected to **PD4 (SCL)** of the RISC-V.  
+  - **SDA (Blue Wire):** Connected to **PD3 (SDA)** of the RISC-V.  
+
+###  **4. Data Flow:**  
+- When the push button is pressed, the RISC-V reads the input from **GPIO PD3**.  
+- The microcontroller decodes the Morse input into text.  
+- The **I2C LCD** displays the converted text output in real time.  
+
+This simple circuit effectively demonstrates **Morse code to text conversion** using a **RISC-V microcontroller** and **I2C communication**. 
 
   </details>
