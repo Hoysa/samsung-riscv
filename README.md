@@ -562,3 +562,57 @@ The waveforms were analyzed for the following instructions:
 ---
 
 </details>
+
+<details>
+  <summary>Task5 : "RISC-V Morse Decoder with LCD Display"</summary>
+
+
+  ### Project Name:  
+**RISC-V Morse Decoder with LCD Display**  
+
+### Overview:  
+This project uses a **RISC-V VSDSquadron Mini** board to translate **Morse code** input via a button into **English text**, which is displayed on an **I2C LCD screen**. This helps individuals unfamiliar with Morse code to read messages in real-time.  
+
+---
+
+## List of Components  
+### Hardware:  
+- **VSDSquadron Mini (RISC-V) Development Board**  
+- **Push Button** (for Morse code input)  
+- **I2C LCD Display** (16x2 or OLED)  
+- **Resistors** (10kΩ for pull-down)  
+- **Connecting Wires**  
+- **Breadboard** (for easy prototyping)  
+- **Power Supply (USB)**  
+
+### Software:  
+- **Ubuntu OS**  
+- **RISC-V GCC Compiler**  
+- **I2C Libraries for LCD**  
+
+
+
+## Pin Details  
+| **Component**  | **Pin Name**       | **VSDSquadron Mini Pin** |
+|---------------|-------------------|-------------------------|
+| **LCD (I2C)**  | VCC               | 3.3V / 5V              |
+|               | GND               | GND                     |
+|               | SDA               | PA9                     |
+|               | SCL               | PA10                    |
+| **Push Button** | One Terminal      | GND                     |
+|               | Other Terminal    | PA1                     |
+
+---
+
+## Block Diagram
+
+![Screenshot 2025-02-13 113414](https://github.com/user-attachments/assets/0b4ec213-d708-41b0-8ba1-1a2705c5805e)
+
+
+
+
+
+
+
+
+  </details>
