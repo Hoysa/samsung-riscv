@@ -611,8 +611,9 @@ This project uses a **RISC-V VSDSquadron Mini** board to translate **Morse code*
 
 
 
+## circuit diagram
 
 
-
+![Screenshot 2025-02-13 150529](https://github.com/user-attachments/assets/78c1a28c-e4f7-4fb6-a956-5d285d243f41)
 
   </details>
