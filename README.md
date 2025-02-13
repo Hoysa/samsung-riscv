@@ -564,7 +564,7 @@ The waveforms were analyzed for the following instructions:
 </details>
 
 <details>
-  <summary>Task5 : "RISC-V Morse Decoder with LCD Display"</summary>
+  <summary>Task5 : RISC-V Morse Decoder with LCD Display.</summary>
 
 
   ### Project Name:  
